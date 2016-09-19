@@ -19,7 +19,10 @@ module.exports = {
   },
 
   plugins: [
-    new webpack.HotModuleReplacementPlugin()
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"development"'
+    }),
   ],
 
   module: {
@@ -30,8 +33,17 @@ module.exports = {
         include: path.join(__dirname, 'src')
       },
       {
-        test: /\.scss$/,
-        loaders: ['style', 'css', 'sass']
+        test: /\.styl$/,
+        loaders: ['style', 'css', 'stylus']
+      },
+      {
+        test: /\.css$/,
+        loaders: ['style','css']
+      },
+      {
+        test: /\.json$/,
+        loader: 'json'
+
       }
     ]
   }

@@ -1,0 +1,3 @@
+const ACTIONS = {
+	"ADD_COLOR":"ADD_COLOR"
+}

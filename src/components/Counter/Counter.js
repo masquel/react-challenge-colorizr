@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import Button from '../Button/Button';
-import './counter.scss';
+import './counter.styl';
 
 export default class Counter extends Component {
   constructor(props) {

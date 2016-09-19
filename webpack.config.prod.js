@@ -9,16 +9,19 @@ module.exports = {
   entry: './src/index',
   
   output: {
-    path: path.join(__dirname, 'public'),
+    path: path.join(__dirname, 'app'),
     filename: 'bundle.js',
-    publicPath: '/public/'
+    publicPath: '/app/'
   },
 
   plugins: [
     new ExtractTextPlugin('style.css'),
     new webpack.optimize.UglifyJsPlugin({
         compressor: { warnings: false }
-    })
+    }),
+    new webpack.DefinePlugin({
+        'process.env.NODE_ENV': '"production"'
+    }),
   ],
 
   module: {
@@ -29,8 +32,8 @@ module.exports = {
         include: path.join(__dirname, 'src')
       },
       {
-        test: /\.scss$/,
-        loader: ExtractTextPlugin.extract('css!sass!postcss')
+        test: /\.styl$/,
+        loader: ExtractTextPlugin.extract('css!stylus')
       }
     ]
   },

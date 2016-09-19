@@ -1,0 +1,8 @@
+export const ACTIONS = {
+	"CHANGE_COLOR": "CHANGE_COLOR",
+	"COLOR_ADD":"COLOR_ADD",
+	"COLOR_REMOVE":"COLOR_REMOVE",
+	"PRESET_ADD":"PRESET_ADD"
+}
+
+export const DEFAULT_COLOR = '#f5f5f5'
