@@ -9,7 +9,7 @@ const Header = (props) => {
 			<div className="container">
 				<div className="column-2 vam">
 					<div className="logo">
-						<img src="images/logo-dark.svg" alt=""/>
+						<a href="/"><img src="images/logo-dark.svg" alt=""/></a>
 					</div>
 				</div>
 				<div className="column-10 vam">

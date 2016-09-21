@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
-
+import {setPreprocessor, setColorName} from '../../actions/'
 import {hexToRGB} from '../../helpers/'
 
 import './export.styl'
@@ -9,8 +9,17 @@ class Export extends React.Component {
 	constructor(props){
 		super(props)
 	}
+	setColorName(id,e){
+		
+		this.props.dispatch(setColorName(id,e.target.value))
+	}
 	render(){
-		let colors = this.props.colorPreset
+		let {colorPreset,preprocessor,colorNames, colorsExport} = this.props
+
+		let isSass = preprocessor === 'sass'
+		let isLess = preprocessor === 'less'
+		let isStylus = preprocessor === 'stylus'
+
 		return (
 			<div className="export">
 				<div className="container">
@@ -26,29 +35,72 @@ class Export extends React.Component {
 						</thead>
 						<tbody>
 							{
-								colors.map((color, index)=>{
+								colorPreset.length ? colorPreset.map((color, index)=>{
 									return(
 										<tr key={index}>
 											<td style={{backgroundColor: color}}></td>
 											<td>{color}</td>
 											<td>rgb({hexToRGB(color).join(', ')})</td>
 											<td>
-												<input type="text" value={"color-"+index}/>
+												<input 
+													className="export__input" 
+													type="text" 
+													name={"color_"+index} 
+													value={colorsExport[index].colorName}
+													onChange={(e)=>{this.setColorName(index, e)}}
+												/>
 											</td>
 										</tr>
 									)
-								})
+								}) :
+								<tr>
+									<td colSpan="4">Select Colors for export first</td>
+								</tr>
 							}
 						</tbody>
 					</table>
-					<h2 className="">Export your code</h2>
-					<div className="export__links">
-						<div className="export__link">Sass</div>
-						<div className="export__link">Less</div>
-						<div className="export__link">Stylus</div>
-					</div>
-					<pre className="export__code">
-					</pre>
+					{
+						colorPreset.length ?
+						<div className="export__block">
+							<h2 className="export__title">Export your code</h2>
+							<div className="export__links">
+								<div 
+									className={isSass ? "export__link export__link--active" :"export__link"}
+									onClick={()=>{this.props.dispatch(setPreprocessor('sass'))}}
+								>
+									Sass
+								</div>
+								<div 
+									className={isLess ? "export__link export__link--active" :"export__link"}
+									onClick={()=>{this.props.dispatch(setPreprocessor('less'))}}
+								>
+									Less
+								</div>
+								<div 
+									className={isStylus ? "export__link export__link--active" :"export__link"}
+									onClick={()=>{this.props.dispatch(setPreprocessor('stylus'))}}
+								>
+									Stylus
+								</div>
+							</div>
+							<pre className="export__code">
+								{
+									colorPreset.map((color,index) => {
+										return (
+											<code key={index} className="code">
+												<span className="code__variable">{isSass ? '$' : (isLess ? '@' : '')}{colorsExport[index].colorName}</span>
+												{isStylus ? ' = ' : ': '}
+												{color}
+												{!isStylus ? ';' : ''}
+												<br/>
+											</code>
+										)
+									})
+								}
+							</pre>
+						</div>
+						: ''
+					}
 				</div>
 			</div>
 		)

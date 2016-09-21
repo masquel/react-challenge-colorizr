@@ -8,7 +8,7 @@ export const light = (color) => {
 
 export const hexToRGB = hex => hex.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i, (m, r, g, b) => '#' + r + r + g + g + b + b).substring(1).match(/.{2}/g).map(x => parseInt(x, 16));
 
-export const RGBToHex = (r, g, b) => '#' + [r, g, b].map(x => x.toString(16).length === 1 ? '0' + x.toString(16) : x.toString(16)).join('')
+export const RGBToHex = (r, g, b) => '#' + [r, g, b].map(x => x.toString(16).length === 1 ? '0' + x.toString(16) : x.toString(16)).join('').toUpperCase()
 
 export const mixColors = (color1 = '#000000',color2='#ffffff', percentage=0.5) => {
     // check input
@@ -39,13 +39,13 @@ export const mixColors = (color1 = '#000000',color2='#ffffff', percentage=0.5) =
     else
         color2 = color2.substring(1);   
 
-    console.log('valid: c1 => ' + color1 + ', c2 => ' + color2);
+    //console.log('valid: c1 => ' + color1 + ', c2 => ' + color2);
 
     // 3: we have valid input, convert colors to rgb
     color1 = [parseInt(color1[0] + color1[1], 16), parseInt(color1[2] + color1[3], 16), parseInt(color1[4] + color1[5], 16)];
     color2 = [parseInt(color2[0] + color2[1], 16), parseInt(color2[2] + color2[3], 16), parseInt(color2[4] + color2[5], 16)];
 
-    console.log('hex -> rgba: c1 => [' + color1.join(', ') + '], c2 => [' + color2.join(', ') + ']');
+    //console.log('hex -> rgba: c1 => [' + color1.join(', ') + '], c2 => [' + color2.join(', ') + ']');
 
     // 4: blend
     var color3 = [ 
@@ -54,12 +54,12 @@ export const mixColors = (color1 = '#000000',color2='#ffffff', percentage=0.5) =
         parseInt((1 - percentage) * color1[2] + percentage * color2[2])
     ];
 
-    console.log('c3 => [' + color3.join(', ') + ']');
+   // console.log('c3 => [' + color3.join(', ') + ']');
 
     // 5: convert to hex
     color3 = RGBToHex(color3[0],color3[1],color3[2]);
 
-    console.log(color3);
+   // console.log(color3);
 
     // return hex
     return color3;

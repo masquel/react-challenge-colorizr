@@ -17,7 +17,6 @@ class Selected extends React.Component {
 	}
 	render() {
 		let {colors} = this.props;
-		console.log(colors)
 		let selectedColors = [];
 		for(let i = 0; i < 10; i++){
 			if(typeof colors[i] !== 'undefined'){
@@ -40,7 +39,8 @@ class Selected extends React.Component {
 						selectedColors.map((color, index)=>{
 
 							return (
-								<div 
+								<div
+									key={index} 
 									className={(index < colors.length) ? 'selected__color selected__color--active' : 'selected__color'}
 									style={{
 										backgroundColor: color
@@ -58,7 +58,31 @@ class Selected extends React.Component {
 							)	
 						})
 					}
-					
+				</div>
+				<div className={(true) ? "selected__colors selected__colors--fixed" : "selected__colors selected__colors--fixed selected__colors--hidden"}>
+					{
+						selectedColors.map((color, index)=>{
+
+							return (
+								<div
+									key={index} 
+									className={(index < colors.length) ? 'selected__color selected__color--active' : 'selected__color'}
+									style={{
+										backgroundColor: color
+									}}
+								>
+									<i 
+										className="fa fa-times selected__icon" 
+										style={{
+											color: light(color)? '#000' : '#fff'
+										}}
+										onClick={()=>{this.removeColor(color)}}
+									></i>
+									
+								</div>
+							)	
+						})
+					}
 				</div>
 			</div>
 		)

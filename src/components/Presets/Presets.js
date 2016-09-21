@@ -1,24 +1,55 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import Selected from '../Selected/Selected.js'
+
+
+/*
+ *  
+ *	Import actions and helpers 
+ *
+ */
+
+import {presetAdd,fetchColors} from '../../actions/'
 import {compareArrays} from '../../helpers/'
-import {schemes} from '../../data/colors.json'
-import {presetAdd} from '../../actions/'
+
+
+/*
+ *
+ * Import other components
+ *
+ */
+
+import Selected from '../Selected/Selected.js'
+
+
+/*
+ *
+ * Import styles
+ *
+ */
 
 import './presets.styl'
+
+
+/*
+ *
+ *  Creating Class
+ *
+ */
 
 class Presets extends React.Component {
 	constructor(props){
 		super(props)
 	}
-
 	addPreset(colors){
 		this.props.dispatch(presetAdd(colors))
 	}
-
+	componentDidMount(){
+		this.props.dispatch(fetchColors())
+		console.log(this.props)
+	}
 	render(){
-		let colorPreset = this.props.colorPreset;
-
+		let {colorPreset,colorsImport} = this.props;
+		let {schemes, loading} = colorsImport;
 		return (
 			<div className="presets">
 				<div className="container">
@@ -26,11 +57,14 @@ class Presets extends React.Component {
 				</div>
 				<div className="container">
 					{
-						Object.keys(schemes).map((scheme)=>{
+						loading ?
+						<p>Loading...</p> :
+						Object.keys(schemes).map((scheme,index)=>{
 							let schemeColors = schemes[scheme];
 							let isActive = compareArrays(schemeColors,colorPreset);
 							return (
 								<div 
+									key={index}
 									className={isActive ? 'preset preset--active panel' : 'preset panel'}
 									onClick={()=>{(isActive) ? '' : this.addPreset(schemeColors)}}
 								>
@@ -41,9 +75,9 @@ class Presets extends React.Component {
 
 									<div className="preset__colors">
 										{
-											schemeColors.map((color)=>{
+											schemeColors.map((color, index)=>{
 												return (
-													<div className="preset__color" style={{backgroundColor:color}}></div>
+													<div key={index} className="preset__color" style={{backgroundColor:color}}></div>
 												)
 											})
 										}

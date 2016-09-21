@@ -1,15 +1,49 @@
 .export
 	&__table
 		width 100%
-		border 1px solid #ccc
+		border .1rem solid #ccc
 		border-collapse collapse
 		text-align center
 		th
-			border 1px solid #ccc
-			padding 10px
+			border .1rem solid #ccc
+			padding 1rem
 			background-color #f5f5f5
 			font-weight bold
 		td
-			border 1px solid #ccc
-			padding 10px
-			
+			border .1rem solid #ccc
+			padding 1rem
+	&__input
+		border none
+		display block
+		width 100%
+		padding 1rem
+		border-bottom .1rem solid #ccc
+		&:focus
+			outline none
+			border-bottom-color #e91e63
+	&__links
+		display flex
+	&__link
+		display inline-block
+		border .1em solid #f5f5f5
+		padding 1rem 1.5rem
+		border-radius .5rem
+		&:hover
+			cursor pointer
+			background-color #f5f5f5
+		& + & 
+			margin-left 1rem
+		&--active
+			background-color #e91e63
+			border-color #e91e63
+			color #fff
+			&:hover
+				cursor pointer
+				background-color #e91e63
+	&__code
+		padding 2rem 3rem
+		background-color #f5f5f5
+
+.code
+	&__variable
+		color #e91e63		

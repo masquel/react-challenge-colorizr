@@ -58,7 +58,6 @@ class Sample extends React.Component{
 			}
 			colors.push(converted)
 		}
-		console.log(colors);
 		return (
 			<div className="sample">
 				<div className="panel">
@@ -79,9 +78,10 @@ class Sample extends React.Component{
 					
 					<div className={(this.state.darkBg)? 'sample__colors sample__colors--dark' : 'sample__colors'}>
 						{
-							colors.map((color)=>{
+							colors.map((color,index)=>{
 								return (
 									<div 
+										key={index}
 										className={(colorPreset.indexOf(color) !== -1) ? "sample__color sample__color--selected" : "sample__color"}
 										onClick={
 											()=>{

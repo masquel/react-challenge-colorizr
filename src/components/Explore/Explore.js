@@ -1,8 +1,7 @@
 import React from 'react'
 import Selected from '../Selected/Selected.js'
 import {connect} from 'react-redux'
-import {colorAdd,colorRemove} from '../../actions/'
-import {presets} from '../../data/colors.json'
+import {colorAdd,colorRemove,fetchColors} from '../../actions/'
 import {light} from '../../helpers/'
 
 import './explore.styl'
@@ -19,9 +18,13 @@ class Explore extends React.Component {
 	removeColor(color){
 		this.props.dispatch(colorRemove(color))
 	}
+	componentDidMount(){
+		this.props.dispatch(fetchColors())
+	}
 
 	render(){
-		let colorPreset = this.props.colorPreset;
+		let {colorPreset,colorsImport} = this.props;
+		let {presets, loading} = colorsImport;
 		
 		return (
 			<div className="explore">
@@ -30,15 +33,18 @@ class Explore extends React.Component {
 				</div>
 				<div className="container">
 					{
-						Object.keys(presets).map((preset)=>{
+						loading ?
+						<p>Loading...</p> :
+						Object.keys(presets).map((preset,index)=>{
 							return (
-								<div className="explore__group">
+								<div className="explore__group" key={index}>
 									<h2 className="explore__title">{preset}</h2>
 									{
-										presets[preset].map((color)=>{
+										presets[preset].map((color, index)=>{
 											let inPreset = (colorPreset.indexOf(color) !== -1);
 											return (
 												<div 
+													key={index}
 													className={(inPreset) ? 'explore__preset' : 'explore__preset explore__preset--active' }
 													onClick={()=>{(inPreset) ? this.removeColor(color) : this.addColor(color)}}
 												>
